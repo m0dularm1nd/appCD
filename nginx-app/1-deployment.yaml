@@ -21,7 +21,11 @@ spec:
           command:
             - /bin/sh
             - -c
-            - "echo 'welcome to my web app!' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+            - "echo 'welcome to my changing app!' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "100m"
       dnsConfig:
         options:
           - name: ndots
