@@ -21,7 +21,7 @@ spec:
           command:
             - /bin/sh
             - -c
-            - "echo 'welcome ya manar' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+            - "echo 'welcome ya manar tany ' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
           resources:
             limits:
               memory: "128Mi"
