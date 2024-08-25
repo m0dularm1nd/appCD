@@ -43,3 +43,27 @@ spec:
       port: 80
       protocol: TCP
       targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: web-ingress
+  namespace: appcd
+  annotations:
+    cert-manager.io/cluster-issuer: lets-encrypt
+spec:
+  tls:
+    - hosts:
+        - web.v3il.xyz
+      secretName: web-ingress-tls
+  rules:
+    - host: web.v3il.xyz
+      http:
+        paths:
+          - backend:
+              service:
+                name: web-app
+                port:
+                  number: 80
+            path: /
+            pathType: Prefix
