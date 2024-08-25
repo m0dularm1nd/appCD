@@ -2,18 +2,17 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: web-app
-  namespace: appcd
   labels:
-    app: nginx-app
-  spec:
+    app.kubernetes.io/name: web-app
+spec:
   replicas: 1
   selector:
     matchLabels:
-      app: nginx-app
+      app.kubernetes.io/name: web-app
   template:
     metadata:
       labels:
-        app: nginx-app
+        app.kubernetes.io/name: web-app
     spec:
       containers:
         - image: nginx
@@ -21,4 +20,24 @@ metadata:
           command:
             - /bin/sh
             - -c
-            - "echo 'Welcome to my web app!' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+            - "echo 'welcome to my web app!' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "2"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-app
+  labels:
+    app.kubernetes.io/name: web-app
+spec:
+  selector:
+    app.kubernetes.io/name: web-app
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
